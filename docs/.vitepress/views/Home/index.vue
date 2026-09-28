@@ -21,24 +21,17 @@
           <span class="shake-hand inline-block">👋</span> Hi, I am
           <span
             class="bg-gradient-to-r from-pink-500 to-rose-500 bg-clip-text text-transparent"
-            >Tony</span
+            >ZhangHaha</span
           >.
         </div>
-        <p class="mt-2 text-base sm:text-lg">A Front-End Developer</p>
-        <p class="mt-1 text-black/50">"Whatever it takes."</p>
+        <p class="mt-2 text-base sm:text-lg">Operations</p>
+        <p class="mt-1 text-black/50">"Turning ideas into action."</p>
         <div class="mt-4 flex gap-4">
           <div
             @click="router.go('/AboutMe')"
             class="button relative w-fit cursor-pointer rounded-full bg-white active:scale-95"
           >
             🎉 Welcome
-          </div>
-          <div
-            @click="gotoGithub"
-            class="button button-github relative inline-flex cursor-pointer rounded-full bg-white active:scale-95"
-          >
-            <RiGithubLine class="w-5" />
-            Github
           </div>
         </div>
       </div>
@@ -49,7 +42,6 @@
 <script setup lang="ts">
 import { onMounted, ref, onBeforeUnmount, defineAsyncComponent } from "vue";
 import EmojiBackground from "../../components/EmojiBackground/index.vue";
-import { RiGithubLine } from "@remixicon/vue";
 import { useRouter } from "vitepress";
 import lottieData from "../../assets/dora.json";
 
@@ -61,13 +53,6 @@ const Vue3Lottie = defineAsyncComponent(() =>
 const returnToTopRef = ref<HTMLElement | null>(null);
 
 const router = useRouter();
-const gotoGithub = () => {
-  window.open(
-    "https://github.com/cheeseburgertony",
-    "_blank",
-    "noopener,noreferrer",
-  );
-};
 
 onMounted(() => {
   returnToTopRef.value = document.querySelector(".VPLocalNav.empty.fixed");
@@ -84,11 +69,6 @@ onBeforeUnmount(() => {
   --primary-color: #ff6086;
   /* 优化渲染性能 */
   contain: layout style paint;
-}
-
-.button-github {
-  /* @apply bg-sky-400 */
-  --primary-color: #38bdf8;
 }
 
 .button {

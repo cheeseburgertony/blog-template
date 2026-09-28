@@ -47,9 +47,9 @@ export default defineConfig({
       provider: "local",
     },
     // 顶部导航栏左侧的社交平台跳转
-    socialLinks: siteInfo.githubUrl
-      ? [{ icon: "github", link: siteInfo.githubUrl }]
-      : [],
+    // socialLinks: siteInfo.githubUrl
+    //   ? [{ icon: "github", link: siteInfo.githubUrl }]
+    //   : [],
     // 首页底部版权声明
     footer: {
       copyright: `Copyright © ${new Date().getFullYear()} ${siteInfo.name}`,
