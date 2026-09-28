@@ -28,7 +28,7 @@
         <p class="mt-1 text-black/50">"Whatever it takes."</p>
         <div class="mt-4 flex gap-4">
           <div
-            @click="router.go('/Notes/index')"
+            @click="router.go('/AboutMe')"
             class="button relative w-fit cursor-pointer rounded-full bg-white active:scale-95"
           >
             🎉 Welcome
