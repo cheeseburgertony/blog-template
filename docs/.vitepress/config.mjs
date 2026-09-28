@@ -16,12 +16,6 @@ export default defineConfig({
   description: siteInfo.description,
   head: [
     ["link", { rel: "icon", href: "/favicon.webp" }],
-    // DNS 预解析和预连接优化
-    [
-      "link",
-      { rel: "dns-prefetch", href: "https://vitals.vercel-insights.com" },
-    ],
-    ["link", { rel: "preconnect", href: "https://vitals.vercel-insights.com" }],
     ["link", { rel: "preconnect", href: "https://fonts.googleapis.com" }],
     [
       "link",

@@ -51,22 +51,12 @@ import { onMounted, ref, onBeforeUnmount, defineAsyncComponent } from "vue";
 import EmojiBackground from "../../components/EmojiBackground/index.vue";
 import { RiGithubLine } from "@remixicon/vue";
 import { useRouter } from "vitepress";
-import { inject } from "@vercel/analytics";
-import { injectSpeedInsights } from "@vercel/speed-insights";
 import lottieData from "../../assets/dora.json";
 
 // 动态导入 Vue3Lottie 避免 SSR 问题
 const Vue3Lottie = defineAsyncComponent(() =>
   import("vue3-lottie").then((m) => m.Vue3Lottie),
 );
-
-// 延迟注入分析脚本，避免阻塞首屏渲染
-onMounted(() => {
-  setTimeout(() => {
-    inject();
-    injectSpeedInsights();
-  }, 1000);
-});
 
 const returnToTopRef = ref<HTMLElement | null>(null);
 
