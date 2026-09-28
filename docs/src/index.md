@@ -1,9 +1,9 @@
 ---
-layout: page
+layout: false
 ---
 
 <script setup>
-import AboutMe from '../.vitepress/views/AboutMe.vue'
+import Home from '../.vitepress/views/Home/index.vue'
 </script>
 
-<AboutMe/>
+<Home />
