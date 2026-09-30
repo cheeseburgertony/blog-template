@@ -1,9 +1,9 @@
 ---
 layout: home
 hero:
-  name: 你的博客
-  text: 记录技术、生活与灵感
-  tagline: "在这里写一句博客介绍"
+  name: Haaa
+  text: Haaa
+  tagline: Haaa
   image:
     src: /logo.svg
     alt: VitePress

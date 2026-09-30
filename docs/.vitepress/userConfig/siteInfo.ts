@@ -1,7 +1,7 @@
 export const siteInfo = {
-  name: "你的名字",
-  title: "你的名字的博客",
+  name: "Haaa",
+  title: "Haaa's Homepage",
   url: "https://example.com",
-  description: "记录技术、生活与灵感的个人博客。",
+  description: "Haaa",
   githubUrl: "https://github.com/your-name",
 };
