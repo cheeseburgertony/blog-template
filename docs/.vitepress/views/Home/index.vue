@@ -163,8 +163,8 @@ onBeforeUnmount(() => {
 
 @media (pointer: coarse) {
   .sakana-widget-host {
-    width: clamp(170px, 56vw, 240px);
-    height: clamp(170px, 56vw, 240px);
+    width: clamp(170px, 45vw, 200px);
+    height: clamp(170px, 45vw, 200px);
   }
 }
 
