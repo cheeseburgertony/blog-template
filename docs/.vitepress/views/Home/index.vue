@@ -1,6 +1,7 @@
 <template>
   <div class="home flex h-screen w-screen items-center justify-center">
     <EmojiBackground />
+    <div ref="sakanaHost" class="sakana-widget-host" />
     <div
       class="-mt-10 flex w-screen animate-scale-in-center flex-col px-4 sm:-mt-40 sm:w-[626px]"
     >
@@ -44,27 +45,122 @@ import { onMounted, ref, onBeforeUnmount, defineAsyncComponent } from "vue";
 import EmojiBackground from "../../components/EmojiBackground/index.vue";
 import { useRouter } from "vitepress";
 import lottieData from "../../assets/dora.json";
+import chibiImage from "../../assets/sakana-me-2d-chibi.png";
+
+type SakanaWidgetInstance = {
+  mount: (element: HTMLElement) => SakanaWidgetInstance;
+  unmount: () => SakanaWidgetInstance;
+};
+
+type SakanaWidgetCharacter = {
+  image: string;
+  initialState: {
+    i: number;
+    s: number;
+    d: number;
+    r: number;
+    y: number;
+    t: number;
+    w: number;
+  };
+};
+
+declare global {
+  interface Window {
+    SakanaWidget?: {
+      new (options?: {
+        character?: string;
+        autoFit?: boolean;
+        controls?: boolean;
+      }): SakanaWidgetInstance;
+      getCharacter: (name: string) => SakanaWidgetCharacter | null;
+      registerCharacter: (
+        name: string,
+        character: SakanaWidgetCharacter,
+      ) => void;
+    };
+  }
+}
 
 // 动态导入 Vue3Lottie 避免 SSR 问题
 const Vue3Lottie = defineAsyncComponent(() =>
+  // @ts-ignore
   import("vue3-lottie").then((m) => m.Vue3Lottie),
 );
 
 const returnToTopRef = ref<HTMLElement | null>(null);
+const sakanaHost = ref<HTMLElement | null>(null);
 
 const router = useRouter();
+let sakanaWidget: SakanaWidgetInstance | undefined;
+let sakanaScriptPromise: Promise<void> | undefined;
+let isUnmounted = false;
+
+function loadSakanaWidget() {
+  if (window.SakanaWidget) return Promise.resolve();
+
+  return (sakanaScriptPromise ??= new Promise<void>((resolve, reject) => {
+    const script = document.createElement("script");
+    script.src =
+      "https://cdn.jsdelivr.net/npm/sakana-widget@4.0.0/lib/index.umd.min.js";
+    script.onload = () => resolve();
+    script.onerror = () => {
+      sakanaScriptPromise = undefined;
+      reject(new Error("Failed to load Sakana Widget"));
+    };
+    document.head.appendChild(script);
+  }));
+}
 
 onMounted(() => {
   returnToTopRef.value = document.querySelector(".VPLocalNav.empty.fixed");
   if (returnToTopRef.value) returnToTopRef.value.style.zIndex = "-1000";
+
+  void loadSakanaWidget()
+    .then(() => {
+      if (isUnmounted || !sakanaHost.value || !window.SakanaWidget) return;
+      const SakanaWidget = window.SakanaWidget;
+      const character = SakanaWidget.getCharacter("chisato");
+      if (!character) return;
+
+      SakanaWidget.registerCharacter("blog-chibi", {
+        ...character,
+        image: chibiImage,
+        initialState: {
+          ...character.initialState,
+          r: 0,
+          y: 0,
+          t: 0,
+          w: 0,
+        },
+      });
+      sakanaWidget = new SakanaWidget({
+        character: "blog-chibi",
+        autoFit: true,
+        controls: false,
+      }).mount(sakanaHost.value);
+    })
+    .catch((error) => console.error(error));
 });
 
 onBeforeUnmount(() => {
+  isUnmounted = true;
+  sakanaWidget?.unmount();
+  sakanaWidget = undefined;
   if (returnToTopRef.value) returnToTopRef.value.style.zIndex = "1000";
 });
 </script>
 
 <style scoped>
+.sakana-widget-host {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  z-index: 50;
+  width: clamp(120px, 20vw, 200px);
+  height: clamp(120px, 20vw, 200px);
+}
+
 .home {
   --primary-color: #ff6086;
   /* 优化渲染性能 */
