@@ -161,6 +161,13 @@ onBeforeUnmount(() => {
   height: clamp(120px, 20vw, 200px);
 }
 
+@media (pointer: coarse) {
+  .sakana-widget-host {
+    width: clamp(170px, 56vw, 240px);
+    height: clamp(170px, 56vw, 240px);
+  }
+}
+
 .home {
   --primary-color: #ff6086;
   /* 优化渲染性能 */
